@@ -1,0 +1,226 @@
+{
+  "model": "gpt-4-turbo",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an expert geopolitical analyst specializing in satellite imagery interpretation, with focus on conflict zones and geopolitically significant areas. Your task is to analyze satellite and aerial imagery to extract actionable intelligence and provide expert-level interpretations in a structured JSON format."
+    },
+    {
+      "role": "user",
+      "content": "I'm uploading satellite imagery for analysis. Please provide a comprehensive assessment following the structured format."
+    }
+  ],
+  "functions": [
+    {
+      "name": "generate_satellite_imagery_analysis",
+      "description": "Generates a comprehensive analysis of satellite imagery with structured output",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "timestamp": {
+                "type": "string",
+                "description": "ISO-8601 timestamp of analysis"
+              },
+              "version": {
+                "type": "string",
+                "description": "Version of the analysis format"
+              },
+              "confidence_level": {
+                "type": "number",
+                "description": "Overall confidence level (0-1)"
+              }
+            },
+            "required": ["timestamp", "version", "confidence_level"]
+          },
+          "top_level_analysis": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string",
+                "description": "Concise summary of key findings"
+              },
+              "significance_rating": {
+                "type": "number",
+                "description": "Significance rating on scale of 1-10"
+              },
+              "key_points": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of key findings as bullet points"
+              }
+            },
+            "required": ["summary", "significance_rating", "key_points"]
+          },
+          "technical_assessment": {
+            "type": "object",
+            "properties": {
+              "estimated_resolution": {
+                "type": "string",
+                "description": "Estimated resolution in meters/pixel"
+              },
+              "resolution_confidence": {
+                "type": "number",
+                "description": "Confidence in resolution estimate (0-1)"
+              },
+              "resolution_rationale": {
+                "type": "string",
+                "description": "Explanation for resolution estimate"
+              }
+            },
+            "required": ["estimated_resolution", "resolution_confidence", "resolution_rationale"]
+          },
+          "geolocation_analysis": {
+            "type": "object",
+            "properties": {
+              "coordinates": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "number",
+                    "description": "Latitude in decimal format"
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "description": "Longitude in decimal format"
+                  }
+                },
+                "required": ["latitude", "longitude"]
+              },
+              "location_confidence": {
+                "type": "number",
+                "description": "Confidence in location estimate (0-1)"
+              },
+              "supporting_evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Evidence supporting geolocation estimate"
+              }
+            },
+            "required": ["coordinates", "location_confidence", "supporting_evidence"]
+          },
+          "entities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "Type of entity (building, vehicle, etc.)"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Detailed description of entity"
+                },
+                "confidence": {
+                  "type": "number",
+                  "description": "Confidence in entity identification (0-1)"
+                },
+                "coordinates": {
+                  "type": "object",
+                  "properties": {
+                    "latitude": {
+                      "type": "number",
+                      "description": "Latitude in decimal format (if applicable)"
+                    },
+                    "longitude": {
+                      "type": "number",
+                      "description": "Longitude in decimal format (if applicable)"
+                    }
+                  }
+                }
+              },
+              "required": ["type", "description", "confidence"]
+            },
+            "description": "Array of identified entities"
+          },
+          "change_detection": {
+            "type": "object",
+            "properties": {
+              "is_applicable": {
+                "type": "boolean",
+                "description": "Whether change detection is applicable"
+              },
+              "timeline": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "type": "string",
+                      "description": "ISO-8601 timestamp"
+                    },
+                    "observed_changes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Array of observed changes"
+                    },
+                    "significance": {
+                      "type": "string",
+                      "description": "Description of significance of changes"
+                    }
+                  },
+                  "required": ["timestamp", "observed_changes", "significance"]
+                }
+              }
+            },
+            "required": ["is_applicable"]
+          },
+          "strategic_interpretation": {
+            "type": "object",
+            "properties": {
+              "analysis": {
+                "type": "string",
+                "description": "Detailed analysis text"
+              },
+              "implications": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of strategic implications"
+              },
+              "confidence_factors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Factors affecting confidence in analysis"
+              },
+              "recommended_actions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Recommended actions based on analysis"
+              }
+            },
+            "required": ["analysis", "implications", "confidence_factors", "recommended_actions"]
+          }
+        },
+        "required": [
+          "metadata",
+          "top_level_analysis",
+          "technical_assessment",
+          "geolocation_analysis",
+          "entities",
+          "change_detection",
+          "strategic_interpretation"
+        ]
+      }
+    }
+  ],
+  "function_call": {
+    "name": "generate_satellite_imagery_analysis"
+  },
+  "temperature": 0.7,
+  "max_tokens": 4000
+}
